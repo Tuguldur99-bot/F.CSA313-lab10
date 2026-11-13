@@ -77,4 +77,15 @@ class BonusTest {
     void b8_streak5_thresholdMet_score8() {
         assertEquals(8, DataFlowTargets.bonus(new int[]{1, 1, 1, 1, 1}, 3));
     }
+
+    // ===== Part C: test added to kill mutant M2 (best = present) =====
+
+    // B9: run of 3, a gap, then a run of 4. When the second run beats best (3),
+    // present = 7 but streak = 4, so best = present gives 7 (>= 5 -> +3 bonus)
+    // while the correct best = streak gives 4 (no bonus). Correct score: 5.
+    @Test
+    @DisplayName("B9 bonus({1,1,1,0,1,1,1,1},1)=5: kills M2 (present != streak when best is updated)")
+    void b9_killM2_longRunAfterGap_score5() {
+        assertEquals(5, DataFlowTargets.bonus(new int[]{1, 1, 1, 0, 1, 1, 1, 1}, 1));
+    }
 }
