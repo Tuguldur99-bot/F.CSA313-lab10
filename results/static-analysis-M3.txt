@@ -1,0 +1,7 @@
+----------
+1. WARNING in /home/wrath/labs/lab10/lab10-dataflow/src/main/java/mn/edu/must/sqat/DataFlowTargets.java (at line 49)
+	int total = present + best;
+	    ^^^^^
+The value of the local variable total is not used
+----------
+1 problem (1 warning)
