@@ -47,4 +47,34 @@ class BonusTest {
     void b4_negativeThreshold_throws() {
         assertThrows(IllegalArgumentException.class, () -> DataFlowTargets.bonus(new int[]{1, 1}, -1));
     }
+
+    // ===== Stage 3: ALL-DU-PAIRS (remaining pairs) =====
+
+    // B5: no loop iterations, threshold 0: present(35>50T), best(37>53F), score(51>56)
+    @Test
+    @DisplayName("B5 bonus({},0)=5: present(35>50T) best(37>53F)")
+    void b5_emptyArray_thresholdZero_score5() {
+        assertEquals(5, DataFlowTargets.bonus(new int[]{}, 0));
+    }
+
+    // B6: no loop iterations, threshold 1: present(35>50F), score(49>56)
+    @Test
+    @DisplayName("B6 bonus({},1)=0: present(35>50F) score(49>56)")
+    void b6_emptyArray_thresholdOne_score0() {
+        assertEquals(0, DataFlowTargets.bonus(new int[]{}, 1));
+    }
+
+    // B7: run of 2, gap, run of 1: best(43>42F), best(43>53F), streak(41>42F)
+    @Test
+    @DisplayName("B7 bonus({1,1,0,1},1)=5: shorter run after longer run")
+    void b7_gapThenShorterRun_score5() {
+        assertEquals(5, DataFlowTargets.bonus(new int[]{1, 1, 0, 1}, 1));
+    }
+
+    // B8: present >= threshold and streak 5: score(51>54), score(54>56), best(43>53T)
+    @Test
+    @DisplayName("B8 bonus({1,1,1,1,1},3)=8: score(51>54)")
+    void b8_streak5_thresholdMet_score8() {
+        assertEquals(8, DataFlowTargets.bonus(new int[]{1, 1, 1, 1, 1}, 3));
+    }
 }
