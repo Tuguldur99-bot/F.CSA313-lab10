@@ -31,4 +31,20 @@ class BonusTest {
     void b2_allDefs_presentAtThreshold_shortStreak_score5() {
         assertEquals(5, DataFlowTargets.bonus(new int[]{1, 1}, 1));
     }
+
+    // ===== Stage 2: exception paths (Branch 100%) =====
+
+    // B3: attendance(31>32T)
+    @Test
+    @DisplayName("B3 bonus(null,3) throws: attendance(31>32T)")
+    void b3_nullAttendance_throws() {
+        assertThrows(IllegalArgumentException.class, () -> DataFlowTargets.bonus(null, 3));
+    }
+
+    // B4: threshold(31>32T)
+    @Test
+    @DisplayName("B4 bonus({1,1},-1) throws: threshold(31>32T)")
+    void b4_negativeThreshold_throws() {
+        assertThrows(IllegalArgumentException.class, () -> DataFlowTargets.bonus(new int[]{1, 1}, -1));
+    }
 }
